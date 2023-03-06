@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 
 
-const  CustomInput = ({value, setValue, placeholder, secureTextEntry}) => {
+const  CustomInputUsername = ({value, setValue, placeholder, secureTextEntry}) => {
     return (
         <View style={styles.container}>
             <TextInput value={value} 
@@ -16,12 +16,7 @@ const  CustomInput = ({value, setValue, placeholder, secureTextEntry}) => {
               >
                 
               </TextInput>
-              <Feather
-                name="eye-off"
-                color="grey"
-                size={20}
-                marginVertical={13}
-                />
+              
         </View>
     )
 }
@@ -35,15 +30,10 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         paddingHorizontal: 10,
-        marginVertical: 10,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-
-    
-       
+        marginVertical: 10
     },
 
     input: {},
 
 });
-export default CustomInput;
+export default CustomInputUsername;

@@ -13,6 +13,7 @@ import {
 } from "react-native";
 
 import { StatusBar } from "expo-status-bar";
+import Feather from 'react-native-vector-icons/Feather';
 import axios from "axios";
 // import { useSelector, useDispatch } from "react-redux";
 // import { loginUser, setPassword } from "./Redux/actions";
@@ -26,6 +27,8 @@ import SignUpButton from "../custom_buttons/signup_button"
 // import { createStackNavigator } from "@react-navigation/stack";
 // import SignUp from "./SignUpScreen";
 import HomeScreen from "./HomeScreen";
+import SignUpScreen from "./SignUpScreen";
+import CustomInputUsername from "../extras/custominputusername";
 
 function LoginScreen(props) {
   const { height } = useWindowDimensions();
@@ -80,6 +83,13 @@ function LoginScreen(props) {
     setPassword(value)
   }
 
+  const [data, setData] = React.useState({
+    username: '',
+    password: '',
+    check_textInputChange: false,
+    secureTextEntry: true
+  })
+
 return (
     <View style={styles.root}>
       <Image
@@ -89,9 +99,10 @@ return (
       />
       <Text style={styles.wlcm}>Welcome Back {username}</Text>
       <Text>Username</Text>
-      <CustomInput
+      <CustomInputUsername
         placeholder="Username"
         value={username}
+        autoCapitalize="none"
         setValue={handleUsername}
 
       />
@@ -111,8 +122,8 @@ return (
         <FingerPrintButton onPress={onFingerPrintPressed} />
       </View>
       <TouchableOpacity style={styles.sub} onPress={() => {}}>
-       <SignUpButton text="Create Account" component={SignUp} style={
-        styles.subB}/></TouchableOpacity>
+       <SignUpButton text="Create Account" component={SignUpScreen} style={
+        styles.subB} onPress={()=>props.navigation.navigate('SignUpScreen')}/></TouchableOpacity>
        </View>
       </View>
     
