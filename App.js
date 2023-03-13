@@ -6,37 +6,29 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import  React from "react";
 // import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-// import HomeScreen from './screens/HomeScreen';
-import MainTabScreen from './screens/MainTabScreen';
-import DetailScreen from "./screens/DetailScreen";
-import { DrawerContent } from "./screens/DrawerContent";
-import HelpScreen from "./screens/HelpScreen";
-import LoginScreen from "./screens/LoginScreen";
+import { Drawer } from "./screens/Drawer";
+// const Drawer = createDrawerNavigator();
 import RootStackScreen from "./screens/RootStackScreen";
-
-const Drawer = createDrawerNavigator();
+import {useState, useEffect}   from 'react';
+import TouchID from 'react-native-touch-id';
 
 export default function App() {
+  // const [authenticated, setAuthenticated] = useState(false);
+  // const handleAuthentication = () => {
+  //   TouchID.authenticate('Authenticate with your fingerprint')
+  //     .then(() => {
+  //       setAuthenticated(true);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
   return (
-    <NavigationContainer initialRouteName='LoginScreen'>
-    <RootStackScreen />
-      {/* <Drawer.Navigator initialRouteName='Home' screenOptions={{
-       drawerStyle: {
-       backgroundColor: '#dc2d2d',
-       width: 240,
-       },
-       drawerLabelStyle: {
-       color: 'white'
-      }}}>
-       <Drawer.Screen name="Home" component={MainTabScreen} screenOptions={{headerShown:true,  tabBarLabelStyle: {
-          color: 'white', fontSize: 14
-        }} }
-        />
-        <Drawer.Screen name="Details" component={DetailScreen} />
-        <Drawer.Screen name="Help" component={HelpScreen} />
-      </Drawer.Navigator> */}
-      
-    </NavigationContainer>
+    <NavigationContainer>
+    <Drawer/>
+     
+    {/* <RootStackScreen /> */}
+     </NavigationContainer>
   );
 }
 

@@ -4,6 +4,8 @@ import { Touchable } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Animatable from 'react-native-animatable';
+
+import SignUpScreen from './SignUpScreen';
 // import  Icon from "react-native-vector-icons/Ionicons";
 // import materialIconsReact from 'material-icons-react';
 
@@ -25,13 +27,11 @@ const SplashScreen = ({navigation}) => {
         <Text style={styles.title}>Stay connected to everyone</Text>
         <Text style={styles.text}>Login with account</Text>
         <View  style={styles.button}>
-        <TouchableOpacity onPress={()=>navigation.navigate('LoginScreen')}>
-            <LinearGradient
+        <TouchableOpacity  onPress={()=>navigation.navigate("Signup")}>
+            <LinearGradient 
               colors={['#00415f', '#00415f']}
-              style={styles.signIn}
-            >
-                <Text style={styles.textSign}>Get Started</Text>
-                
+              style={styles.signIn}>
+                <Text style={styles.textSign} >Get Started</Text>
             </LinearGradient>
         </TouchableOpacity>
         </View>

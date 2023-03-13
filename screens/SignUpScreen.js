@@ -9,7 +9,9 @@ import {
   useWindowDimensions,
   Platform,
   Pressable,
+  ScrollView,
   TouchableOpacity,
+  Alert
 } from "react-native";
 
 import { StatusBar } from "expo-status-bar";
@@ -33,37 +35,96 @@ import CustomInputUsername from "../extras/custominputusername";
 
 
 function SignUpScreen(props) {
+
   const { height } = useWindowDimensions();
      const [password, setPassword] = useState("");
+     const [confirmPassword, setConfirmPassword] = useState("");
      const [username, setUsername] = useState("");
 
     React.useEffect(()=>{
 
     },[])
 
+    //We check for password validity here
+    const checkPasswordValidity = value => {
+      const isNonWhiteSpace = /^\S*$/;
+      if (!isNonWhiteSpace.test(value)) {
+        return 'Password must not contain Whitespaces.';
+      }
+  
+      const isContainsUppercase = /^(?=.*[A-Z]).*$/;
+      if (!isContainsUppercase.test(value)) {
+        return 'Password must have at least one Uppercase Character.';
+      }
+  
+      const isContainsLowercase = /^(?=.*[a-z]).*$/;
+      if (!isContainsLowercase.test(value)) {
+        return 'Password must have at least one Lowercase Character.';
+      }
+  
+      const isContainsNumber = /^(?=.*[0-9]).*$/;
+      if (!isContainsNumber.test(value)) {
+        return 'Password must contain at least one Digit.';
+      }
+  
+      const isValidLength = /^.{8,16}$/;
+      if (!isValidLength.test(value)) {
+        return 'Password must be 8-16 Characters Long.';
+      }
+  
+      // const isContainsSymbol =
+      //   /^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/;
+      // if (!isContainsSymbol.test(value)) {
+      //   return 'Password must contain at least one Special Symbol.';
+      // }
+  
+      return null;
+    };
+
  //Button for signin
   const onSignInPressed = async() => {
-    try{
-        const user={
-        username:username,
-        password:password
-      }
-      console.log(user, "login user")
-      axios.post("https://63ecdf8b31ef61473b2b100b.mockapi.io/login", user).then((res) => console.log(res, "detail")).then(props.navigation.navigate("HomeScreen"))
-      console.log(res, "detail")
-      const {data} = res;
-      console.log(data, "user data")
-      // dispatch(loginUser(user))
-    }
-    catch(err){
-     console.log(err, "error")
-    }
+    console.warn("Signin Now");
+    props.navigation.navigate("LoginScreen");
   };
 
   //SignUpTextPressed
-  const onSignUpPressed = () => {
-    console.warn("Signup Now");
-    props.navigation.navigate("SignUpScreen");
+  const onSignUpPressed = async() => {
+    try{
+
+      if(password !== confirmPassword){
+        Alert.alert('Wrong Credentials', 'Passwords do not match', [
+          {
+             text: 'Cancel',
+             onPress: () => console.log('Cancel Pressed'),
+             style: 'cancel',
+           },
+           {text: 'OK', onPress: () => console.log('OK Pressed')},
+         ]);
+        console.log("Incorrect password");
+        return false;
+      }else{
+      const user={
+      username:username,
+      password:password
+    }
+    console.log(user, "login user")
+    axios.post("https://63ecdf8b31ef61473b2b100b.mockapi.io/Signup", user)
+    .then((res)=>{
+      console.log(res, "detail");
+      props.navigation.navigate("LoginScreen")
+    })
+    .catch(err=>console.log(err, "The error"))
+    
+    console.log(res, "detail")
+    const {data} = res;
+    console.log(data, "user data")
+    // dispatch(loginUser(user))
+  }
+  }
+  catch(err){
+   console.log(err, "error")
+  }
+   
   };
 
   //FingerPrintButton
@@ -85,14 +146,21 @@ function SignUpScreen(props) {
     setPassword(value)
   }
 
+  //Confirm password handling
+  const handleConfirmPassword=(value)=>{
+    console.log(value, "cpass")
+    setConfirmPassword(value)
+  }
+
 return (
     <View style={styles.root}>
+    <ScrollView>
       <Image
         source={Logo}
         style={[styles.logo, { height: height * 0.3 }]}
         resizeMode="contain"
       />
-      <Text style={styles.wlcm}>Create Account{username}</Text>
+      <Text style={styles.wlcm}>Create Account {username}</Text>
       <Text>Username</Text>
       <CustomInputUsername
         placeholder="Username"
@@ -113,8 +181,8 @@ return (
       <Text>Confirm Password</Text>
       <CustomInput
         placeholder="Confirm Password"
-        value={password}
-        setValue={handlePassword}
+        value={confirmPassword}
+        setValue={handleConfirmPassword}
         secureTextEntry={true}
       />
       
@@ -122,13 +190,14 @@ return (
      
      <View style={styles.arrSignUpBtn}>
       <View style={styles.arrangebtn}>
-        <LoginButton text="Create Account" onPress={onSignInPressed} component={LoginScreen}/>
+        <LoginButton text="Create Account" onPress={onSignUpPressed} component={SignUpScreen}/>
         <FingerPrintButton onPress={onFingerPrintPressed}/>
       </View>
       <TouchableOpacity style={styles.sub} onPress={() => {}}>
-       <SignUpButton text="Login" component={LoginScreen} style={
+       <SignUpButton text="Login"  style={
         styles.subB} onPress={()=>props.navigation.navigate('LoginScreen')}/></TouchableOpacity>
        </View>
+       </ScrollView>
       </View>
     
   );

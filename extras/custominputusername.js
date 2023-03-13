@@ -10,6 +10,7 @@ const  CustomInputUsername = ({value, setValue, placeholder, secureTextEntry}) =
               onChangeText={setValue}
               placeholder={placeholder} 
               style={styles.input}
+              name='username'
               autoCaptalize="none"
               /* This is for passwords */
               secureTextEntry={secureTextEntry}
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#F5F4F4',
         width: '100%',
-        height: '9%',
+        height: '7%',
         borderColor: '#f5f4f4',
         borderWidth: 1,
         borderRadius: 5,
